@@ -9,9 +9,10 @@
 ;; mapping pins to strips
 (define strips
   (list 
-   (make-strip/init 6 10 11)
-   (make-strip/init 0 2 3)))
-
+   (make-strip/init 15 16 1) ; 0
+   (make-strip/init 0 2 3)   ; 1
+   (make-strip/init 8 9 7)   ; 2
+   (make-strip/init 12 13 14)))
 
 (define-values (my-dispatch my-url)
   (dispatch-rules
