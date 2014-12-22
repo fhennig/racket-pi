@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane prefHeight="184.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Red" GridPane.rowIndex="1" />
+      <Label text="Green" GridPane.rowIndex="2" />
+      <Label text="Blue" GridPane.rowIndex="3" />
+      <Slider fx:id="_greenSlider" max="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Slider fx:id="_redSlider" max="1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Slider fx:id="_blueSlider" max="1.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="_specificLedCB" prefWidth="150.0" GridPane.columnIndex="1" />
+   </children>
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="101.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="479.0" minWidth="10.0" prefWidth="479.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+</GridPane>
