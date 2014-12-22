@@ -27,7 +27,7 @@ public class ColorSetterService
 	
 	private void initAvailableLeds()
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = -1; i < 4; i++)
 		{
 			final Led l = new Led(i);
 			l.colorProperty().addListener(e -> colorChangedHandler(l));

@@ -16,27 +16,39 @@
 
 (define-values (my-dispatch my-url)
   (dispatch-rules
-   [("set" (integer-arg) (number-arg) (number-arg) (number-arg)) set-handler]
-   [else error-handler]))
+   [("set" (integer-arg) (number-arg) (number-arg) (number-arg)) set-perc-handler]
+   [else (lambda (req) error-response)]))
 
-(define (strip-id-valid? s)
-  (and (>= s 0) (< s (length strips))))
+(define ok-response (response/xexpr "ok"))
+(define error-response (response/xexpr "error"))
 
-(define (color-arg-valid? a)
-  (and (>= a 0) (<= a 1)))
+;; semi-predicates for validation
 
-(define (set-handler req strip-id r g b)
-  (let ([strip-val? (lambda (s) (and (>= s 0) (< s (length strips))))]
-	[color-val? (lambda (a) (and (>= a 0) (<= a 1)))])
-    (cond [(and (strip-val? strip-id) (color-val? r)
-		(color-val? g) (color-val? b))
-	   (set-color (list-ref strips strip-id)
-		      (make-rgb r g b))
-	   (response/xexpr "ok")]
-	  [else (error-handler 'nothing)])))
+(define (percent-values->rgb r g b)
+  (if (and (and (>= r 0) (<= r 1))
+	   (and (>= g 0) (<= g 1))
+	   (and (>= b 0) (<= b 1)))
+      (make-rgb r g b)
+      #f))
 
-(define (error-handler req)
-  (response/xexpr "error"))
+(define (strip-id->strip-setter id)
+  (cond [(and (>= id 0) (< id (length strips)))
+	 (curry set-color (list-ref strips id))]
+	[(< id 0) (lambda (color)
+		    (map (curryr set-color color) strips))]
+	[else #f]))
+
+;; handlers
+
+(define (set-perc-handler req strip-id r g b)
+  (let ([strip-setter (strip-id->strip-setter strip-id)]
+	[color (percent-values->rgb r g b)])
+    (set/respond strip-setter color)))
+
+(define (set/respond strip-setter color)
+  (cond [(and strip color) (strip-setter color)
+	 ok-response]
+	 [else error-response]))
 
 (serve/servlet my-dispatch
                #:launch-browser? #f
